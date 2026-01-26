@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "horseimprovements",
+  "version": "${version}",
+  "name": "horseimprovements",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/horseimprovements/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.leclowndu93150.horseimprovements.client.HorseimprovementsClient"
+    ],
+    "main": [
+      "com.leclowndu93150.horseimprovements.Horseimprovements"
+    ]
+  },
+  "mixins": [
+    "horseimprovements.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
