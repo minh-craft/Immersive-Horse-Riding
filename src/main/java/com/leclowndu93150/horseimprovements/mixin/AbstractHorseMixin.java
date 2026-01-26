@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractHorse.class)
@@ -37,6 +38,9 @@ public abstract class AbstractHorseMixin extends Animal implements HorseAccessor
     @Unique
     private float horseimprovements$lastStrafeInput = 0.0f;
 
+    @Unique
+    private boolean horseimprovements$wasBeingRidden = false;
+
     protected AbstractHorseMixin(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -54,6 +58,11 @@ public abstract class AbstractHorseMixin extends Animal implements HorseAccessor
     @Inject(method = "getRiddenRotation", at = @At("HEAD"), cancellable = true)
     private void horseimprovements$overrideRotation(LivingEntity rider, CallbackInfoReturnable<Vec2> cir) {
         if (!(rider instanceof Player player)) return;
+
+        if (!horseimprovements$wasBeingRidden) {
+            horseimprovements$targetYRot = this.getYRot();
+            horseimprovements$wasBeingRidden = true;
+        }
 
         float strafeInput = horseimprovements$lastStrafeInput;
         float forwardInput = horseimprovements$lastForwardInput;
@@ -130,5 +139,12 @@ public abstract class AbstractHorseMixin extends Animal implements HorseAccessor
             return target;
         }
         return current + Math.signum(diff) * maxDelta;
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void horseimprovements$checkRiderStatus(CallbackInfo ci) {
+        if (horseimprovements$wasBeingRidden && this.getControllingPassenger() == null) {
+            horseimprovements$wasBeingRidden = false;
+        }
     }
 }
