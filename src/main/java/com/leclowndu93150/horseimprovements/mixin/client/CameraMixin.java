@@ -39,7 +39,7 @@ public abstract class CameraMixin {
         float frequency = HorseImprovementsConfig.headBobFrequency;
 
         float smoothTick = animTick + partialTick;
-        float bobOffset = (float) Math.sin(smoothTick * frequency) * intensity * currentSpeed;
+        float bobOffset = (float) -Math.cos(smoothTick * frequency) * intensity * currentSpeed;
 
         this.move(0, bobOffset, 0);
     }

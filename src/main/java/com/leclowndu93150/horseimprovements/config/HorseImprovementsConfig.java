@@ -19,10 +19,10 @@ public class HorseImprovementsConfig {
     public static float turnSpeed = 5.0f;
     public static float acceleration = 0.05f;
     public static float deceleration = 0.08f;
-    public static float headBobIntensity = 0.15f;
+    public static float headBobIntensity = 0.14f;
     public static float headBobFrequency = 0.5f;
-    public static float horseHeadBobIntensity = 0.15f;
-    public static float horseHeadBobFrequency = 0.8f;
+    public static float horseHeadBobIntensity = 0.14f;
+    public static float horseHeadBobFrequency = 0.5f;
 
     public static void load() {
         if (Files.exists(CONFIG_PATH)) {
